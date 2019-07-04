@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Home</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/sb-admin-2.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="/static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('home')}}">
+        <!-- <img class="img-profile rounded-circle" src="https://www.ios-repo-updates.com/images/repositories/iospackix.png">-->
+        <div class="sidebar-brand-icon rotate-n-0">
+          <img height="40" width="40" src="static/img/charticon.svg">
+        </div>
+        <div class="sidebar-brand-text mx-3">StockFront</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('home')}}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Home</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Tools
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+          aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Scanners</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Available stock scanners:</h6>
+            <a class="collapse-item" href="{{url_for('gappers')}}">Gappers</a>
+            <a class="collapse-item" href="{{url_for('week52')}}">52 week High/Low</a>
+            <a class="collapse-item" href="#">Custom [in dev]</a>
+          </div>
+        </div>
+      </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">  
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Trade AI
+      </div>
+      <!-- Nav Item - Trade Ai -->
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('charlie')}}">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charlie</span></a>
+        <a class="nav-link" href="{{url_for('delta')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Delta</span></a>
+      </li>
+
+       <!-- Divider -->
+       <hr class="sidebar-divider d-none d-md-block">  
+      <!-- Heading -->
+      <div class="sidebar-heading">
+          Trade AI API
+        </div>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>AI API [in dev]</span></a>
+          </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            method="POST" action="">
+            <div class="input-group">
+              <div class="input-group-append">
+                {{ form1.hidden_tag() }}
+                {{form1.search(class="form-control form control-lg", placeholder = "Search for a ticker")}}
+                {{form1.submit(class = "btn btn-primary btn-user btn-block") }}
+              </div>
+            </div>
+          </form>
+
+          <h6><strong>Demo! </strong> Some data might not be up to date.</h6>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">1</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">June 4, 2019</div>
+                    <span class="font-weight-bold">This is a test alert!</span>
+                  </div>
+                </a>
+              </div>
+            </li>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{current_user.firstname}}</span>
+                <img class="img-profile rounded-circle"
+                  src="https://www.ios-repo-updates.com/images/repositories/iospackix.png">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{{url_for('profile')}}">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="{{url_for('logout')}}">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+
+            </li>
+
+          </ul>
+        </nav>
+        <!-- End of Topbar -->
+
+        <div class="container-fluid">
+          <!-- Not a good look
+          .<style type="text/css">
+            .html-wpsites {
+              height: 25px;
+              background-color: rgb(255, 255, 255);
+              font-family: "Nunito";
+              font-size: 20px;
+              color: #5a5c69;
+            }
+          </style>
+          <marquee class="html-wpsites" direction="left" behavior="scroll" scrollamount="8" width="100%">{{banner_string}}
+          </marquee>-->
+
+
+          <!-- Page Heading -->
+          {% with messages = get_flashed_messages(with_categories = true)%}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}}">
+            {{message}}
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          <h1 class="h3 mb-2 text-gray-800">Watchlist</h1>
+          <p class="mb-4">You can add stocks you have on watch to this watchlist. You can do so from the form on the
+            right or directly from the scanners.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h5 class="m-0 font-weight-bold text-primary">My watchlist
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                  method="POST" action="" style="float: right;">
+                  <div class="input-group">
+                    <div class="input-group-append">
+                      {{ form2.hidden_tag() }}
+                      {{form2.ticker(class="form-control form control-lg", placeholder = "Add ticker")}}
+                      {{form2.submit(class = "btn btn-primary btn-user btn-block") }}
+                </form>
+            </div>
+          </div>
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example" class="table table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Latest close</th>
+                  <th>Date</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Latest close</th>
+                  <th>Date added</th>
+                  <th>Source</th>
+
+                </tr>
+              </tfoot>
+              <script>
+                function setupData() {
+                  var table = $(document).ready(function () {
+                    $('#example').DataTable({
+                      "ajax": {
+                        "url": "/wldata",
+                        "dataType": "json",
+                        "dataSrc": "data",
+                        "contentType": "application/json"
+                      },
+                      "columns": [{
+                          "data": "ticker"
+                        },
+                        {
+                          "data": "close"
+                        },
+                        {
+                          "data": "date_posted"
+                        },
+                        {
+                          "data": "scanner"
+                        }
+                      ]
+                    });
+                  });
+                }
+                $(window).on("load", setupData);
+
+                setInterval(function () {
+                  $('#example').DataTable().ajax.reload(null, false);
+                }, 30000);
+              </script>
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Donut Chart -->
+      <div class="col-xl-4 col-lg-5" style="float: right;">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3">
+            <h5 class="m-0 font-weight-bold text-primary">Market sentiment</h5>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="chart-pie pt-4">
+              <canvas id="sentiment"></canvas>
+            </div>
+            <hr>
+            We comapre the VIX against multiple simple and exponetial moving averages to determine the sentiment of the
+            market.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8 col-lg-7">
+        <h1 class="h3 mb-2 text-gray-800">Upvote table</h1>
+        <p class="mb-4">This table contains the the stocks that have been today upvoted by the rest of the community
+          that they have on watch for the day. The stock with the most upvotes comes first.</p>
+
+        <!-- Upvote table-->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <div class="table-responsive">
+              <table id="upvote" class="table table-bordered" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Place</th>
+                    <th>Ticker</th>
+                    <th>+ Watchlist</th>
+                    <th>Link</th>
+                    <th>Upvote</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Place</th>
+                    <th>Ticker</th>
+                    <th>+ Watchlist</th>
+                    <th>Link</th>
+                    <th>Upvote</th>
+                  </tr>
+                </tfoot>
+                <script>
+                  function setupData() {
+                    var table = $(document).ready(function () {
+                      $('#upvote').DataTable({
+                        "ajax": {
+                          "url": "/getupvotes",
+                          "dataType": "json",
+                          "dataSrc": "data",
+                          "contentType": "application/json"
+                        },
+                        "columns": [{
+                            "data": "place"
+                          },
+                          {
+                            "data": "ticker"
+                          },
+                          {
+                            "data": "watchlist",
+                            "render": function (data, type, row, meta) {
+                              if (type === 'display') {
+                                data = '<a href="' + data +
+                                  '" class="btn btn-primary btn-sm" role="button">+ Watchlist</a>'
+                              }
+                              return data;
+                            }
+                          },
+                          {
+                            "data": "link",
+                            "render": function (data, type, row, meta) {
+                              if (type === 'display') {
+                                data = '<a href="' + data +
+                                  '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                              }
+                              return data;
+                            }
+                          },
+                          {
+                            "data": "upvote",
+                            "render": function (data, type, row, meta) {
+                              if (type === 'display') {
+                                data = '<a href="' + data +
+                                  '" class="btn btn-primary btn-sm" role="button">Upvote</a>'
+                              }
+                              return data;
+                            }
+                          }
+                        ]
+                      });
+                    });
+                  }
+                  $(window).on("load", setupData);
+
+                  setInterval(function () {
+                    $('#upvote').DataTable().ajax.reload(null, false);
+                  }, 60000);
+                </script>
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-md-6">
+          <h1 class="h3 mb-2 text-gray-800">Market News</h1>
+          <p class="mb-4">Quick overview of the main news of today. Stock specific news can be found on the stocks own
+            page. </p>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+              <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">{{newsdata.source[0]}}</strong>
+                <h4 class="mb-0">
+                  <a class="text-dark" href="{{newsdata.url[0]}}">{{newsdata.headline[0]}} </a>
+                </h4>
+                <div class="mb-1 text-muted">{{newsdata.datetime[0].date()}}</div>
+                <p class="card-text mb-auto">{{newsdata.summary[0]}}</p>
+                <a href="{{newsdata.url[0]}}">Continue reading</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+              <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">{{newsdata.source[1]}}</strong>
+                <h4 class="mb-0">
+                  <a class="text-dark" href="{{newsdata.url[1]}}">{{newsdata.headline[1]}}e</a>
+                </h4>
+                <div class="mb-1 text-muted">{{newsdata.datetime[1].date()}}</div>
+                <p class="card-text mb-auto">{{newsdata.summary[1]}}</p>
+                <a href="{{newsdata.url[1]}}">Continue reading</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+              <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">{{newsdata.source[2]}}</strong>
+                <h4 class="mb-0">
+                  <a class="text-dark" href="{{newsdata.url[2]}}">{{newsdata.headline[2]}}</a>
+                </h4>
+                <div class="mb-1 text-muted">{{newsdata.datetime[2].date()}}</div>
+                <p class="card-text mb-auto">{{newsdata.summary[2]}}</p>
+                <a href="{{newsdata.url[2]}}">Continue reading</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+              <div class="card-body d-flex flex-column align-items-start">
+                <strong class="d-inline-block mb-2 text-primary">{{newsdata.source[3]}}</strong>
+                <h4 class="mb-0">
+                  <a class="text-dark" href="{{newsdata.url[3]}}">{{newsdata.headline[3]}}</a>
+                </h4>
+                <div class="mb-1 text-muted">{{newsdata.datetime[3].date()}}</div>
+                <p class="card-text mb-auto">{{newsdata.summary[3]}}</p>
+                <a href="{{newsdata.url[3]}}">Continue reading</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+  </div>
+  <!-- Footer -->
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Stockfront 2019</span>
+      </div>
+      <center> <button type="button" href="about" class="btn btn-link">About us</button>
+        <div>
+          <img height="30" width="30" src="/static/img/facebook_icon.svg">
+          <img height="30" width="30" src="/static/img/instagram_icon.svg">
+        </div>
+      </center>
+    </div>
+  </footer>
+  <!-- End of Footer -->
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/static/js/demo/datatables-demo.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/static/vendor/chart.js/Chart.min.js"></script>
+
+
+
+  <script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito',
+      '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    // Pie Chart Example
+    var ctx = document.getElementById("sentiment");
+    var pclabel = {{pclabels | safe}};
+    var sentiment = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: pclabel,
+        datasets: [{
+          data: {{pcvalues}},
+          backgroundColor: ['#12d13f', '#ff0f37'],
+          hoverBackgroundColor: ['#12d13f', '#ff0f37'],
+          hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 20,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        legend: {
+          display: false
+        },
+        cutoutPercentage: 60,
+      },
+    });
+  </script>
+
+</body>
+
+</html>

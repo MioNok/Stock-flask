@@ -1,0 +1,271 @@
+{% extends "layout.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = true)%}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{category}}">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800"> Trade AI: <strong class="d-inline-block mb-2 text-primary"> Delta </strong> </h1>
+<p class="mb-4"> Delta is Charlies sister who still has a long road ahead of herself. Lets see when she initiates her first trade. Charlie likes technical indicators, 
+    but delta has no time for such things, she just wants to see stocks that are going higher to go even higher, same with the stocks going lover. For simplicity, she likes
+    to trade with an established trend, and such with lower risk (maybe?). She inherits the same disdvantages and Charlie, and also just likes monopoly money so far.
+     </p>
+<p class="mb-4"> Delta is currently:
+  <strong class="d-inline-block mb-2 text-primary"> {{delta_status}} </strong>
+</p>
+
+<div class="container">
+
+  <!-- Table1 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Delta's Active Trades</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="tableactive" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Entry price</th>
+              <th>Target price</th>
+              <th>Stop price (prelim.)</th>
+              <th>Unreal PL</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Entry price</th>
+              <th>Target price</th>
+              <th>Stop price (prelim.)</th>
+              <th>Unreal PL</th>
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#tableactive').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ],
+                "ajax": {
+                  "url": "/deltaactive",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "ticker"
+                  },
+                  {
+                    "data": "EntryPrice"
+                  },
+                  {
+                    "data": "TargetPrice"
+                  },
+                  {
+                    "data": "StopPrice"
+                  },
+                  {
+                    "data": "UnrealPl"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#tableactive').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Table2 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Delta's Trade History</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="history" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Action</th>
+              <th>Result</th>
+              <th>Link</th>
+
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Action</th>
+              <th>Result</th>
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#history').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ],
+                "ajax": {
+                  "url": "/deltahistory",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "Ticker"
+                  },
+                  {
+                    "data": "Side"
+                  },
+                  {
+                    "data": "Action"
+                  },
+                  {
+                    "data": "Result"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#history').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Table3 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Delta's Watchlist</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="deltawl2" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Entry price</th>
+              <th>Strategy</th>
+              <!--<th>Price difference</th>-->
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Entry price</th>
+              <th>Strategy</th>
+             <!-- <th>Price difference</th>-->
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#deltawl2').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ],
+                "ajax": {
+                  "url": "/deltawl",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "ticker"
+                  },
+                  {
+                    "data": "side"
+                  },
+                  {
+                    "data": "price"
+                  },
+                  {
+                    "data": "strategy"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#deltawl2').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock content %}

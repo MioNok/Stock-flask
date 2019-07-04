@@ -1,0 +1,286 @@
+{% extends "layout.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = true)%}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{category}}">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800"> Trade AI: <strong class="d-inline-block mb-2 text-primary"> Charlie </strong> </h1>
+<p class="mb-4">Charlie is a child, and he is still learning. He is also still learning to learn.. However he is able
+  follow set strategies and trade on his own, within certain boundries of course.
+  The goal is to have Charlie complement the trade ideas produced by the strategies by evaulating if similar setups have
+  worked in the past. To help Charlie make decisions
+  he has access to several different technical indicators to determine the likelyhood that the trade will succeed.
+  Unfortunately the trading API which he uses does not yet allow shorting, but he will still search for short positions.
+  He is told never to trade earnings plays, this however still requires training. He is a child after all.
+  Please note that even though the trades are happening in real time, Charlie is still playing with Monopoly money. </p>
+<p class="mb-4"> Charlie is currently:
+  <strong class="d-inline-block mb-2 text-primary"> {{charlie_status}} </strong>
+</p>
+
+<div class="container">
+
+  <!-- Table1 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Charlie's Active Trades</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="tableactive" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Entry price</th>
+              <th>Target price</th>
+              <th>Stop price (prelim.)</th>
+              <th>Unreal PL</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Entry price</th>
+              <th>Target price</th>
+              <th>Stop price (prelim.)</th>
+              <th>Unreal PL</th>
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#tableactive').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ],
+                "ajax": {
+                  "url": "/charlieactive",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "ticker"
+                  },
+                  {
+                    "data": "EntryPrice"
+                  },
+                  {
+                    "data": "TargetPrice"
+                  },
+                  {
+                    "data": "StopPrice"
+                  },
+                  {
+                    "data": "UnrealPl"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#tableactive').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Table2 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Charlie's Trade History</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="history" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Action</th>
+              <th>Result</th>
+              <th>Date</th>
+              <th>Link</th>
+
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Action</th>
+              <th>Result</th>
+              <th>Date</th>
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#history').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ], 
+                "order": [
+                [4, "desc"]
+              ],
+                "ajax": {
+                  "url": "/charliehistory",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "Ticker"
+                  },
+                  {
+                    "data": "Side"
+                  },
+                  {
+                    "data": "Action"
+                  },
+                  {
+                    "data": "Result"
+                  },
+                  {
+                    "data": "Timestamp"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#history').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Table3 -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Charlie's Watchlist</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="charliewl2" class="table table-bordered" style="width:100%">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Entry price</th>
+              <th>Current price</th>
+              <th>Price difference</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Ticker</th>
+              <th>Side</th>
+              <th>Entry price</th>
+              <th>Current price</th>
+              <th>Price difference</th>
+              <th>Link</th>
+            </tr>
+          </tfoot>
+          <script>
+            var table = $(document).ready(function () {
+              $('#charliewl2').DataTable({
+                "aLengthMenu": [
+                  [5, 10, 15],
+                  [5, 10, 15]
+                ],
+                "ajax": {
+                  "url": "/charliewl",
+                  "dataType": "json",
+                  "dataSrc": "data",
+                  "contentType": "application/json"
+                },
+                "columns": [{
+                    "data": "ticker"
+                  },
+                  {
+                    "data": "side"
+                  },
+                  {
+                    "data": "price"
+                  },
+                  {
+                    "data": "current_price"
+                  },
+                  {
+                    "data": "price_difference"
+                  },
+                  {
+                    "data": "link",
+                    "render": function (data, type, row, meta) {
+                      if (type === 'display') {
+                        data = '<a href="' + data +
+                          '" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                      }
+                      return data;
+                    }
+                  }
+                ]
+              });
+            });
+
+            setInterval(function () {
+              $('#charliewl2').DataTable().ajax.reload(null, false);
+            }, 60000);
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,205 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% with messages = get_flashed_messages(with_categories = true)%}
+  {% if messages %}
+      {% for category, message in messages %}
+      <div class ="alert alert-{{category}}">
+          {{message}}
+      </div>
+      {% endfor %}
+  {% endif %}
+{% endwith %}
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800"> 52 Week High/Low</h1>
+<p class="mb-4">These are the stocks that are close to making 52 week highs or lows or have recently made a new 52 week high/low.</p>
+         <!-- DataTales1 -->
+         <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">52 Week High</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table id="tablelong" class="table table-bordered" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th>Watchlist</th>
+                              <th>ticker</th>
+                              <th>companyName</th>
+                              <th>52 week High</th>
+                              <th>previous close</th>
+                              <th>Link</th>
+                              <th>Upvote</th>
+                          </tr>
+                      </thead>
+                      <tfoot>
+                          <tr>
+                              <th>Watchlist</th>
+                              <th>ticker</th>
+                              <th>companyName</th>
+                              <th>52 week High</th>
+                              <th>previous close</th>
+                              <th>Link</th>
+                              <th>Upvote</th>
+
+                          </tr>
+                      </tfoot>
+              <script>
+                    var table = $(document).ready(function () {
+                      $('#tablelong').DataTable({
+                          "ajax": {
+                              "url": "/getweek52high", 
+                              "dataType": "json",
+                              "dataSrc": "data",
+                              "contentType":"application/json"
+                          },
+                          "columns": [
+                              {"data": "watchlist",
+                              "render": function(data, type, row, meta){
+                              if(type === 'display'){
+                                  data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">+ Watchlist</a>'
+                                  }
+                                  return data;
+                                  }
+                            
+                            },
+                              {"data": "ticker"},
+                              {"data": "companyName"},
+                              {"data": "week52High"},
+                              {"data": "previousClose"},
+                              {"data" : "link",
+                              "render": function(data, type, row, meta){
+                              if(type === 'display'){
+                                  data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                                  }
+                                  return data;
+                                  }
+                            },
+                            {"data" : "upvote",
+                              "render": function(data, type, row, meta){
+                              if(type === 'display'){
+                                  data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">Upvote</a>'
+                                  }
+                                  return data;
+                                  }
+                            }
+                            
+                            
+
+                            
+                          ]
+                      });
+                  });
+
+              setInterval( function () {
+                $('#tablelong').DataTable().ajax.reload( null, false ); 
+              }, 30000 );
+
+
+            
+
+              </script>
+              </table>
+
+              </div>
+            </div>
+          </div>
+
+                    <!-- DataTales2 -->
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">52 Week Low</h6>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tableshort" class="table table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Watchlist</th>
+                                        <th>ticker</th>
+                                        <th>companyName</th>
+                                        <th>52 week low</th>
+                                        <th>previous close</th>
+                                        <th>Link</th>
+                                        <th>Upvote</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Watchlist</th>
+                                        <th>ticker</th>
+                                        <th>companyName</th>
+                                        <th>52 week low</th>
+                                        <th>previous close</th>
+                                        <th>Link</th>
+                                        <th>Upvote</th>
+          
+                                    </tr>
+                                </tfoot>
+                        <script>
+                              var table = $(document).ready(function () {
+                                $('#tableshort').DataTable({
+                                    "ajax": {
+                                        "url": "/getweek52low", 
+                                        "dataType": "json",
+                                        "dataSrc": "data",
+                                        "contentType":"application/json"
+                                    },
+                                    "columns": [
+                                        {"data": "watchlist",
+                                        "render": function(data, type, row, meta){
+                                        if(type === 'display'){
+                                            data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">+ Watchlist</a>'
+                                            }
+                                            return data;
+                                            }
+                                      
+                                      },
+                                        {"data": "ticker"},
+                                        {"data": "companyName"},
+                                        {"data": "week52Low"},
+                                        {"data": "previousClose"},
+                                        {"data" : "link",
+                                        "render": function(data, type, row, meta){
+                                        if(type === 'display'){
+                                            data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">Stock</a>'
+                                            }
+                                            return data;
+                                            }
+                                      },
+                                      {"data" : "upvote",
+                                        "render": function(data, type, row, meta){
+                                        if(type === 'display'){
+                                            data = '<a href="'+data+'" class="btn btn-primary btn-sm" role="button">Upvote</a>'
+                                            }
+                                            return data;
+                                            }
+                                      }
+                                      
+                                      
+          
+                                      
+                                    ]
+                                });
+                            });
+          
+                        setInterval( function () {
+                          $('#tableshort').DataTable().ajax.reload( null, false ); 
+                        }, 30000 );
+          
+          
+                      
+          
+                        </script>
+                        </table>
+          
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+{% endblock content %}

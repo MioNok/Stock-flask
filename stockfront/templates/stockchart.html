@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<center>
+  <h1 class="h3 mb-2 text-gray-800">Stock chart of {{stock}}</h1>
+</center>
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_d24dc"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener"
+      target="_blank"><span class="blue-text">{{stock}} Chart</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+    new TradingView.widget({
+      "width": 1200,
+      "height": 800,
+      "symbol": "{{stock}}",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "Dark",
+      "style": "1",
+      "locale": "en",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "studies": [
+        "MASimple@tv-basicstudies",
+        "MAExp@tv-basicstudies"
+      ],
+      "show_popup_button": true,
+      "popup_width": "1000",
+      "popup_height": "650",
+      "container_id": "tradingview_d24dc"
+    });
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+
+
+
+
+{% endblock content %}
