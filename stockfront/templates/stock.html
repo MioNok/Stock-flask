@@ -141,7 +141,7 @@
 
 </div>
 <!-- End of Main Content -->
-<!-- End of Main Content -->
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="/static/vendor/jquery/jquery.min.js"></script>
@@ -169,6 +169,7 @@
 
 
 <script>
+  // This code is heavily based on the default graph code from the used by the theme. Minor modifications has been made.
   // Set new default font family and font color to mimic Bootstrap's default styling
   Chart.defaults.global.defaultFontFamily = 'Nunito',
     '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -199,7 +200,7 @@
     return s.join(dec);
   }
 
-  // Area Chart Example
+  // Area Chart 
   var ctx = document.getElementById("myAreaChart");
   var dates = {{dates | safe}};
   var myLineChart = new Chart(ctx, {

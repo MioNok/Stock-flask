@@ -43,6 +43,15 @@ class WatchlistStock(db.Model):
     def __repr__(self):
         return "Watchlist "+self.ticker+','+self.user_id+', '+ self.id+', '+self.scanner
 
+class ApiToken(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    token = db.Column(db.String(36),nullable =False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return "ApiToken "+self.id+','+self.user_id+', '+ self.token
+
 
 
     

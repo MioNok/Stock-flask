@@ -81,9 +81,9 @@
             <hr class="sidebar-divider d-none d-md-block">  
             <!-- Heading -->
             <div class="sidebar-heading">
-              Trade AI
+              Trade Algo
             </div>
-            <!-- Nav Item - Trade Ai -->
+            <!-- Nav Item - Trade Algo -->
             <li class="nav-item">
               <a class="nav-link" href="{{url_for('charlie')}}">
                 <i class="fas fa-fw fa-chart-area"></i>
@@ -91,18 +91,21 @@
               <a class="nav-link" href="{{url_for('delta')}}">
                   <i class="fas fa-fw fa-chart-area"></i>
                   <span>Delta</span></a>
+              <a class="nav-link" href="{{url_for('echo')}}">
+                   <i class="fas fa-fw fa-chart-area"></i>
+                   <span>Echo</span></a>
             </li>
       
              <!-- Divider -->
              <hr class="sidebar-divider d-none d-md-block">  
             <!-- Heading -->
             <div class="sidebar-heading">
-                Trade AI API
+                Trade Algo API
               </div>
               <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="/api">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>AI API [in dev]</span></a>
+                    <span>Algo API</span></a>
                 </li>
       
       <!-- Divider -->
@@ -280,11 +283,6 @@
       <!-- Page level plugins -->
       <script src="/static/vendor/chart.js/Chart.min.js"></script>
 
-      
-    
-    
-    
-    
      
 </body>
 </html>

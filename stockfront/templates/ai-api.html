@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2> The API</h2>
+
+<div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h5 class="m-0 font-weight-bold text-primary">API instructions</h5>
+<p> In very simple terms, the api allows acces to the data created by the trading bots. Currently you can view their trading history, watchlists and their active trades trough the api. </p>
+<p> The base url is the same as the webste, followed by <b>/api.v1/</b> that initiates the version, this is followed by the algo you want to view ex. <b>/charlie/</b>. 
+    After this you add the type of data that you want by <b>/watchlist/</b> other possible options are <i>tradehistory</i> and <i>active_trades</i>. 
+    Lastly you'll need to add a limit argument (max is 20) <b>/limit=10/ and your token as &token="Your token"</b></p>
+<p>If you do not have a token yet you can create one from your <a href = "{{url_for('profile')}}">profile</a>. Your token can be found from your. <b>Once you account has a token </b> you can click the link below to view an example api query.</p>
+<a href="api.v1/charlie/tradehistory/limit=10&token={{token}}" class="btn btn-primary btn" role="button"><strong>www.stockfront.appspot.com/api.v1/charlie/tradehistory/limit=10&token={{token}}</strong> </a>
+
+
+</div>
+</div>
+
+
+
+
+
+{% endblock content %}

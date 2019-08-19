@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+{% with messages = get_flashed_messages(with_categories = true)%}
+  {% if messages %}
+      {% for category, message in messages %}
+      <div class ="alert alert-{{category}}">
+          {{message}}
+      </div>
+      {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+<div class="col-lg-8">
+<h2>Your Profile</h2>
+<p>You can only have one api key at any time. If you create a new one the old one will not work.</p>
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="col"><strong class="d-inline-block mb-2 text-primary">First Name:</strong> {{current_user.firstname}}</div>
+          <div class="col"><strong class="d-inline-block mb-2 text-primary">Last Name:</strong> {{current_user.lastname}}</div>
+          <div class="w-100"></div>
+          <div class="col"><strong class="d-inline-block mb-2 text-primary">Email: </strong> {{current_user.email}}</div>
+          <div class="col"><strong class="d-inline-block mb-2 text-primary">Api key</strong> {{token}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="createtoken" class="btn btn-primary btn" role="button">Create new API token! </a>
+</div>
+
+</div>
+
+{% endblock content %}

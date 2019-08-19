@@ -9,8 +9,8 @@ import uuid
 
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY'] = "<Somekey>"
-app.config['SQLALCHEMY_DATABASE_URI'] =  '<usersdatabase>'
+app.config['SECRET_KEY'] = '>SomeKey'
+app.config['SQLALCHEMY_DATABASE_URI'] = '<SomeURI>'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
